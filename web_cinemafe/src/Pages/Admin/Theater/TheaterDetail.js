@@ -60,7 +60,6 @@ const TheaterDetail = () => {
             image: formData.image,
             rooms: seatData,
         };
-
         dispatch(UpdateTheaterAction(formDataToSubmit, navigate));
     };
 
@@ -73,7 +72,7 @@ const TheaterDetail = () => {
             const newData = [...prevData];
             newData[expandedCard] = {
                 ...newData[expandedCard],
-                rowNameNew: updatedSeats.map(rowSeat => ({ rowSeatsNew: rowSeat }))
+                rowNameNew: updatedSeats.map(rowSeatArray => ({ rowSeatsNew: rowSeatArray }))
             };
             return newData;
         });
@@ -82,7 +81,7 @@ const TheaterDetail = () => {
     const handleAddRoom = () => {
         const newRoom = {
             name: newRoomName,
-            status: false,
+            status: RoomStatus.Active,
             rowNameNew: []
         };
         setSeatData(prevData => [...prevData, newRoom]);
@@ -282,7 +281,7 @@ const TheaterDetail = () => {
                             onSeatsChange={(newSeats) => {
                                 setSeatData((prevData) => {
                                     const newData = [...prevData];
-                                    newData[newRoomIndex].rowNameNew = newSeats;
+                                    newData[newRoomIndex].rowNameNew = newSeats.map(rowSeatArray => ({ rowSeatsNew: rowSeatArray }))  ;
                                     return newData;
                                 });
                             }} 

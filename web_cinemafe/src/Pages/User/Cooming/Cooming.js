@@ -26,7 +26,7 @@ const Cooming = () => {
     useEffect(() => {
         if (movieList && movieList.length > 0) {
             const today = moment();
-            const cooming = movieList.filter(movie => moment(movie.releaseDate).isAfter(today));
+            const cooming = movieList.filter(movie => moment(movie.releaseDate).isAfter(today) && !movie.isSpecial);
 
             setMovieCooming(cooming);
         }

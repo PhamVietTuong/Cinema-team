@@ -76,6 +76,12 @@ const Login = () => {
         });
     };
 
+    const handleKeyPressLogin = (event) => {
+        if (event.key === 'Enter') {
+            handleLogin();
+        }
+    };
+
     const handleLogin = async () => {
         try {
             await schemaLogin.validate(formLoginData, { abortEarly: false });
@@ -130,6 +136,12 @@ const Login = () => {
 
     const handleClickShowPasswordRegister = () => setShowPasswordRegister((show) => !show);
     const handleClickShowConfirmPasswordRegister = () => setShowConfirmPasswordRegister((show) => !show);
+
+    const handleKeyPressRegister = (event) => {
+        if (event.key === 'Enter') {
+            handleRegister();
+        }
+    };
 
     const handleInputChangeRegister = (event) => {
         const { name, value } = event.target;
@@ -192,9 +204,11 @@ const Login = () => {
                                     <FormControl sx={{ m: 1 }} variant="outlined" fullWidth className="loginFormControl">
                                         <FormLabel sx={{ mb: 1 }} className="loginFormLabel">Email hoặc số điện thoại <span className="required">*</span></FormLabel>
                                         <OutlinedInput
+                                        type="text"
                                             name="userName"
                                             onChange={handleInputChangeLogin}
                                             onBlur={(event) => validateFieldLogin(event.target.name, event.target.value)}
+                                            onKeyPress={handleKeyPressLogin}
                                         />
                                         {!!errorsLogin.userName && (
                                             <FormHelperText>{errorsLogin.userName}</FormHelperText>
@@ -220,6 +234,7 @@ const Login = () => {
                                             name="password"
                                             onChange={handleInputChangeLogin}
                                             onBlur={(event) => validateFieldLogin(event.target.name, event.target.value)}
+                                            onKeyPress={handleKeyPressLogin}
                                         />
                                         {!!errorsLogin.password && (
                                             <FormHelperText>{errorsLogin.password}</FormHelperText>
@@ -247,6 +262,7 @@ const Login = () => {
                                             name="fullName"
                                             onChange={handleInputChangeRegister}
                                             onBlur={(event) => validateFieldRegister(event.target.name, event.target.value)}
+                                            onKeyPress={handleKeyPressRegister}
                                         />
                                         {!!errorsRegister.fullName && (
                                             <FormHelperText>{errorsRegister.fullName}</FormHelperText>
@@ -261,6 +277,7 @@ const Login = () => {
                                                 onChange={(date) => setFormRegisterData({ ...formRegisterData, birthDay: dayjs(date).tz('Asia/Ho_Chi_Minh').format('YYYY-MM-DD') })}
                                                 onBlur={(event) => validateFieldRegister('birthDay', formRegisterData.birthDay)}
                                                 renderInput={(params) => <TextField {...params} />}
+                                                onKeyPress={handleKeyPressRegister}
                                             />
                                         </LocalizationProvider>
                                         {!!errorsRegister.birthDay && (
@@ -288,6 +305,7 @@ const Login = () => {
                                             name="phone"
                                             onChange={handleInputChangeRegister}
                                             onBlur={(event) => validateFieldRegister(event.target.name, event.target.value)}
+                                            onKeyPress={handleKeyPressRegister}
                                         />
                                         {!!errorsRegister.phone && (
                                             <FormHelperText>{errorsRegister.phone}</FormHelperText>
@@ -300,6 +318,7 @@ const Login = () => {
                                             name="email"
                                             onChange={handleInputChangeRegister}
                                             onBlur={(event) => validateFieldRegister(event.target.name, event.target.value)}
+                                            onKeyPress={handleKeyPressRegister}
                                         />
                                         {!!errorsRegister.email && (
                                             <FormHelperText>{errorsRegister.email}</FormHelperText>
@@ -324,6 +343,7 @@ const Login = () => {
                                             name="password"
                                             onChange={handleInputChangeRegister}
                                             onBlur={(event) => validateFieldRegister(event.target.name, event.target.value)}
+                                            onKeyPress={handleKeyPressRegister}
                                         />
                                         {!!errorsRegister.password && (
                                             <FormHelperText>{errorsRegister.password}</FormHelperText>
@@ -348,6 +368,7 @@ const Login = () => {
                                             name="confirmPassword"
                                             onChange={handleInputChangeRegister}
                                             onBlur={(event) => validateFieldRegister(event.target.name, event.target.value)}
+                                            onKeyPress={handleKeyPressRegister}
                                         />
                                         {!!errorsRegister.confirmPassword && (
                                             <FormHelperText>{errorsRegister.confirmPassword}</FormHelperText>

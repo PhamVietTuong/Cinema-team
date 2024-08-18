@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { ShowTimeByTheaterIdAction, TheaterAction } from '../../../Redux/Actions/CinemasAction';
+import { MovieListAction, ShowTimeByTheaterIdAction, TheaterAction } from '../../../Redux/Actions/CinemasAction';
 import { DOMAIN } from '../../../Ustil/Settings/Config';
 import moment from 'moment';
 
@@ -15,7 +15,7 @@ const BookTickets = () => {
 
     const dispatch = useDispatch();
     const [value, setValue] = useState('1');
-    const { theaterDetail, listMovieByTheaterId } = useSelector((state) => state.CinemasReducer)
+    const { theaterDetail, listMovieByTheaterId, movieList } = useSelector((state) => state.CinemasReducer)
     const [loading, setLoading] = useState(true);
     const currentTime = moment();
     const today = moment().startOf('day');
@@ -34,6 +34,7 @@ const BookTickets = () => {
         const fetchData = async () => {
             await dispatch(TheaterAction(id));
             await dispatch(ShowTimeByTheaterIdAction(id));
+            await dispatch(MovieListAction());
             setLoading(false);
         };
         fetchData();
@@ -155,8 +156,8 @@ const BookTickets = () => {
         setCurrentPageisUpcomingMovie(value);
     };
 
-    const paginatedMoviesisUpcomingMovie = isUpcomingMovie(listMovieByTheaterId).slice((currentPageisUpcomingMovie - 1) * itemsPerPage, currentPageisUpcomingMovie * itemsPerPage);
-    const pageCountisUpcomingMovie = Math.ceil(isUpcomingMovie(listMovieByTheaterId).length / itemsPerPage);
+    const paginatedMoviesisUpcomingMovie = movieList.filter(movie => moment(movie.releaseDate).isAfter(today) && !movie.isSpecial).slice((currentPageisUpcomingMovie - 1) * itemsPerPage, currentPageisUpcomingMovie * itemsPerPage);
+    const pageCountisUpcomingMovie = Math.ceil(movieList.filter(movie => moment(movie.releaseDate).isAfter(today) && !movie.isSpecial).length / itemsPerPage);
 
     const handlePageisSpecialMovieChange = (event, value) => {
         setCurrentPageisSpecialMovie(value);
@@ -253,7 +254,7 @@ const BookTickets = () => {
                                             <h2 className="heading --t-center">PHIM SẮP CHIẾU</h2>
                                         </div>
                                         {
-                                            Array.isArray(listMovieByTheaterId) && isUpcomingMovie(listMovieByTheaterId).length > 0 ?
+                                            Array.isArray(movieList) && movieList.length > 0 ?
                                                 (
                                                     <>
                                                         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>

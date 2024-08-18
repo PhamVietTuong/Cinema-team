@@ -115,13 +115,20 @@ const Header = (props) => {
                                         <div className="hd-search-form" onClick={handleSearchClick}>
                                             <div>
                                                 <div className="hd-search-wr">
+                                                    <form autoComplete="off">
+
                                                     <input
                                                         className="re-input !bg-white"
                                                         type="text"
                                                         placeholder="Tìm phim, rạp"
+                                                        autoComplete="off"
+                                                        name="searchKey"
+                                                        id="searchKey"
                                                         value={infoSearch.searchKey}
                                                         onChange={(e) => setInfoSearch({ searchKey: e.target.value, isActor: false })}
                                                     />
+                                                    </form>
+
                                                     <div className="search-category-dropdown" 
                                                     onMouseEnter={() => setIsDropdownVisible(true)} onMouseLeave={() => setIsDropdownVisible(false)}
                                                     >

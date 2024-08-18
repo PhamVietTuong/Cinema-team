@@ -103,7 +103,7 @@ namespace Cinema.Repository
                     .Include(x => x.MovieType)
                     .Where(x => x.MovieId == movie.Id)
                     .ToListAsync();
-                var schedules = await _context.ShowTimeRoom.Include(x => x.ShowTime).ThenInclude(st => st.Movie).Where(x => x.ShowTime.Movie.Id == movie.Id).ToListAsync();
+                var schedules = await _context.ShowTimeRoom.Include(x => x.ShowTime).ThenInclude(st => st.Movie).Where(x => x.ShowTime.Movie.Id == movie.Id && x.ShowTime.StartTime > DateTime.Now).ToListAsync();
                 bool isSpecial = movie.ReleaseDate > DateTime.Now && schedules.Any();
                 string movieTypes = String.Join(", ", movieTypeDetails.Select(x => x.MovieType.Name));
 
@@ -127,7 +127,8 @@ namespace Cinema.Repository
                         MovieType = movieTypes,
                         ProjectionForm = (int)ProjectionForm.Time2D,
                         ShowTimeTypeName = "2D",
-                        IsSpecial = isSpecial
+                        IsSpecial = isSpecial,
+                        Schedules = new List<ScheduleRowViewModel>()
                     });
                 }
 
@@ -151,7 +152,8 @@ namespace Cinema.Repository
                         MovieType = movieTypes,
                         ProjectionForm = (int)ProjectionForm.Time3D,
                         ShowTimeTypeName = "3D",
-                        IsSpecial = isSpecial
+                        IsSpecial = isSpecial,
+                        Schedules = new List<ScheduleRowViewModel>()
                     });
                 }
             }

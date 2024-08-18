@@ -180,7 +180,7 @@ a {
     align-items: center;
     display: flex;
     position: relative;
-    width: 250px;
+    width: 205px;
 }
 
 .hd-search-wr input {
@@ -243,7 +243,6 @@ a {
         font-size: 16px;
         max-width: 200px;
         position: relative;
-        text-transform: uppercase;
         top: 2px;
         overflow: hidden;
 }
